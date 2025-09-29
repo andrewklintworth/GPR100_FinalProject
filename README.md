@@ -1,6 +1,6 @@
 # Unity WebGL CI/CD with GitHub Actions
 
-WebGL published here (EDIT IT!) https://github.com/andrewklintworth/UnityBoilerplate_test/
+WebGL published here (EDIT IT!) https://andrewklintworth.github.io/UnityBoilerplate_test/
 
 # Setup Steps:
 
