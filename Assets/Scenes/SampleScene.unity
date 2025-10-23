@@ -1065,9 +1065,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerRB: {fileID: 1340250581}
-  horizontalSpeed: 30
-  jumpHeight: 500
-  maxSpeed: 10
+  horizontalSpeed: 1000
+  jumpHeight: 3000
+  maxSpeed: 5
 --- !u!54 &1340250581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1076,8 +1076,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340250575}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
