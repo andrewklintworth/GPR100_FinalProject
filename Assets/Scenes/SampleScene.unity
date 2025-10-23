@@ -1046,7 +1046,7 @@ Transform:
   m_GameObject: {fileID: 1340250575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.20898}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerRB: {fileID: 1340250581}
   horizontalSpeed: 30
-  jumpHeight: 1000
+  jumpHeight: 500
   maxSpeed: 10
 --- !u!54 &1340250581
 Rigidbody:
