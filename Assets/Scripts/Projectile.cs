@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -15,7 +14,8 @@ public class Projectile : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.name.Equals("Player #2")) {
+        if (other.name.Equals("Player #2")) 
+            {
             other.GetComponent<Player2Physics>().Hit();
             Destroy(gameObject); 
             }
