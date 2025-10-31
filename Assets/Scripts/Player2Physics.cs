@@ -5,16 +5,22 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Player2Physics : MonoBehaviour
 {
-    //public RigidBody;
+    //public
     public Rigidbody PlayerRB;
     public float horizontalSpeed = 0;
+    public GameObject healthBar;
     public int jumpHeight = 0;
     public float maxSpeed = 0;
+
+    //private/not public
     int timerFixedUpdate = 2;
+    float maxHealth = 160;
+    int Health = 160;
 
 
     // Start is called before the first frame update
@@ -52,8 +58,12 @@ public class Player2Physics : MonoBehaviour
         }
     }
     
-    public void Hit()
+    public void Hit(int damage, int force, Vector3 location)
     {
+        Health -= damage;
+        healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
+        PlayerRB.AddForce((transform.position - location).normalized * force, ForceMode.Impulse);
+        if (Health<=0) { SceneManager.LoadScene("Menu"); }
         Debug.Log("Hit");
     }
 
