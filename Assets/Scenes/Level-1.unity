@@ -331,6 +331,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &786033781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786033782}
+  m_Layer: 0
+  m_Name: BoosterPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786033782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786033781}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.35, y: -0.553, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1783356631}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982411775
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562956993}
   - component: {fileID: 1562956994}
+  - component: {fileID: 1562956995}
   m_Layer: 0
   m_Name: First Character-1.png (1)
   m_TagString: Untagged
@@ -904,6 +936,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1562956995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562956992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4020581dba5e2cc42bf55e021e98d8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slash: {fileID: 0}
+  BoosterPosition: {fileID: 0}
 --- !u!1 &1672720987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1247,7 @@ GameObject:
   - component: {fileID: 1783356630}
   - component: {fileID: 1783356629}
   - component: {fileID: 1783356628}
+  - component: {fileID: 1783356632}
   m_Layer: 0
   m_Name: Player #2
   m_TagString: Untagged
@@ -1286,9 +1333,24 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 786033782}
   - {fileID: 1562956993}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783356632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783356627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4020581dba5e2cc42bf55e021e98d8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slash: {fileID: 5581747770722379717, guid: 9c534777630bfe848bc92a492ec51a56, type: 3}
+  BoosterPosition: {fileID: 786033781}
 --- !u!1 &1786589965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerRB: {fileID: 2134881940}
   horizontalSpeed: 5000
+  healthBar: {fileID: 1961140424}
   jumpHeight: 15000
   maxSpeed: 4
 --- !u!54 &2134881940

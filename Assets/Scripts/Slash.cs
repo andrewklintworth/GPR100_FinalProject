@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class slash : MonoBehaviour
 {
-    public float velocity = 0.5f;
+    public float velocity = -0.5f;
     void Update()
     {
         var pos = transform.position;
@@ -14,10 +14,11 @@ public class Projectile : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.name.Equals("Player #2")) 
+        if (other.name.Equals("Player #1"))
             {
-            other.GetComponent<Player2Physics>().Hit(35,100,transform.position);
-            Destroy(gameObject); 
+            other.GetComponent<PlayerPhysics>().Hit(35, 100, transform.position);
+            Destroy(gameObject);
             }
     }
 }
+
