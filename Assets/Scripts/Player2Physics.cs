@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class Player2Physics : MonoBehaviour
 {
     //public
+    public GameObject basicHit;
     public Rigidbody PlayerRB;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
@@ -19,6 +20,7 @@ public class Player2Physics : MonoBehaviour
 
     //private/not public
     int timerFixedUpdate = 2;
+    int hitCooldown = 0;
     float maxHealth = 160;
     int Health = 160;
 
@@ -38,10 +40,18 @@ public class Player2Physics : MonoBehaviour
     void FixedUpdate()
     {
         if (timerFixedUpdate > 0) { timerFixedUpdate--; }
+        if (hitCooldown > 0) { hitCooldown--; }
 
         RaycastHit hitinfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f))
         {
+
+            if (Input.GetKey(KeyCode.L)&&hitCooldown==0)
+            {
+                Instantiate(basicHit, transform.position + new Vector3(-0.2f, -0.1f, 0), Quaternion.identity, gameObject.transform);
+                hitCooldown = 80;
+            }
+
             // Right/Left movement
             if (Input.GetKey(KeyCode.LeftArrow)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed, 0, 0)); }
             if (Input.GetKey(KeyCode.RightArrow)) { PlayerRB.AddForce(new Vector3(horizontalSpeed, 0, 0)); }

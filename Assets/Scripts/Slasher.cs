@@ -7,12 +7,23 @@ public class Slasher : MonoBehaviour
     public GameObject slash;
     public GameObject BoosterPosition;
 
+    int delay = 0;
+
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-            Instantiate(slash, BoosterPosition.transform.position, Quaternion.identity);
 
+        if (Input.GetKeyDown(KeyCode.K) && delay == 0)
+        {
+            Instantiate(slash, BoosterPosition.transform.position, Quaternion.identity);
+            delay = 400;
+        }
+
+    }
+
+    void FixedUpdate()
+    {
+        if (delay > 0) { delay--; }
     }
 }
 

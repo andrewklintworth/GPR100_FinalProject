@@ -6,12 +6,20 @@ public class Shooter: MonoBehaviour
 {
     public GameObject Projectile;
     public GameObject BoosterPosition;
+    int delay = 0;
 
 
     void Update()
     {
-        if (Input.GetKeyDown (KeyCode.Space))
-            Instantiate (Projectile,BoosterPosition.transform.position, Quaternion.identity);
-
+        if (Input.GetKeyDown(KeyCode.Space) && delay == 0)
+        {
+            Instantiate(Projectile, BoosterPosition.transform.position, Quaternion.identity);
+            delay = 400;
+        }
+    }
+    
+    void FixedUpdate()
+    {
+        if (delay > 0) { delay--; }
     }
 }

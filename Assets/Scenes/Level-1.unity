@@ -1267,6 +1267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db3de71fafda3ec2bafdcb6148eb025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicHit: {fileID: 2968917563724608093, guid: 929b806cdad75e27284b2fd19dc5f0ba, type: 3}
   PlayerRB: {fileID: 1783356629}
   horizontalSpeed: 5000
   healthBar: {fileID: 1786589965}
@@ -1329,7 +1330,7 @@ Transform:
   m_GameObject: {fileID: 1783356627}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.61, y: -0.18, z: 0}
+  m_LocalPosition: {x: 5.3599997, y: -0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1547,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbff85295238844993b582bef079f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicHit: {fileID: 7962392514455773353, guid: 39aa6744f961ae699b020fcdd6003a44, type: 3}
   PlayerRB: {fileID: 2134881940}
   horizontalSpeed: 5000
   healthBar: {fileID: 1961140424}
