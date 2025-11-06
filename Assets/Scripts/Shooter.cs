@@ -11,7 +11,7 @@ public class Shooter: MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && delay == 0)
+        if (Input.GetKeyDown(KeyCode.V) && delay == 0)
         {
             Instantiate(Projectile, BoosterPosition.transform.position, Quaternion.identity);
             delay = 400;

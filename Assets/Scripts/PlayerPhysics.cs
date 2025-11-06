@@ -11,7 +11,9 @@ using UnityEngine.UIElements;
 public class PlayerPhysics : MonoBehaviour
 {
     //public
+    public GameObject hitVisual;
     public GameObject basicHit;
+    public GameObject basicHitAir;
     public Rigidbody PlayerRB;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
@@ -21,6 +23,7 @@ public class PlayerPhysics : MonoBehaviour
     //private/not public
     int timerFixedUpdate = 2;
     int hitCooldown = 0;
+    int hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
 
@@ -41,14 +44,15 @@ public class PlayerPhysics : MonoBehaviour
     {
         if (timerFixedUpdate > 0) { timerFixedUpdate--; }
         if (hitCooldown > 0) { hitCooldown--; }
+        if (hitStun > 0) { hitStun--; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
       
         RaycastHit hitinfo;
-        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f)) {
+        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f)&&hitStun==0) {
 
             if (Input.GetKey(KeyCode.C)&&hitCooldown==0)
             {
                 Instantiate(basicHit, transform.position + new Vector3(0.6f, -0.5f, 0), Quaternion.identity, gameObject.transform);
-                hitCooldown = 80;
+                hitCooldown = 60;
             }
 
             // Right/Left movement
@@ -64,16 +68,27 @@ public class PlayerPhysics : MonoBehaviour
                 timerFixedUpdate = 2;
                 PlayerRB.AddForce(new Vector3(0, jumpHeight, 0));
             }
-        } 
+        } else if(hitStun==0)
+        {
+            if (Input.GetKey(KeyCode.C)&&hitCooldown==0)
+            {
+                Instantiate(basicHitAir, transform.position + new Vector3(0, -1, 0), Quaternion.identity, gameObject.transform);
+                hitCooldown = 60;
+            }
+        }
 
         
     }
     public void Hit(int damage, int force, Vector3 location)
     {
+        hitVisual.GetComponent<MeshRenderer>().enabled = true;
+        hitStun = 30;
         Health -= damage;
+
         healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
         PlayerRB.AddForce((transform.position - location).normalized * force, ForceMode.Impulse);
         if (Health <= 0) { SceneManager.LoadScene("Menu"); }
+
         Debug.Log("Hit");
     }
 
