@@ -13,7 +13,7 @@ public class Shooter: MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V) && delay == 0)
         {
-            Instantiate(Projectile, BoosterPosition.transform.position, Quaternion.identity);
+            Instantiate(Projectile, BoosterPosition.transform.position, transform.rotation);
             delay = 400;
         }
     }

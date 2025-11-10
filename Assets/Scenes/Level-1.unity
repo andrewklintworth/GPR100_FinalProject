@@ -1437,6 +1437,7 @@ MonoBehaviour:
   basicHit: {fileID: 2968917563724608093, guid: 929b806cdad75e27284b2fd19dc5f0ba, type: 3}
   basicHitAir: {fileID: 4309125585427621824, guid: 46879491187a51885b6eaa72fa734327, type: 3}
   PlayerRB: {fileID: 1783356629}
+  otherPlayer: {fileID: 2134881937}
   horizontalSpeed: 5000
   healthBar: {fileID: 1786589965}
   jumpHeight: 15000
@@ -1721,6 +1722,7 @@ MonoBehaviour:
   basicHit: {fileID: 7962392514455773353, guid: 39aa6744f961ae699b020fcdd6003a44, type: 3}
   basicHitAir: {fileID: 5534009464219958786, guid: c8843ae4bcd34eeb68bbe0ae2da2c02d, type: 3}
   PlayerRB: {fileID: 2134881940}
+  otherPlayer: {fileID: 1783356627}
   horizontalSpeed: 5000
   healthBar: {fileID: 1961140424}
   jumpHeight: 15000

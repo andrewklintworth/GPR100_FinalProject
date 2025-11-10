@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    GameObject player;
     public float velocity = 0.5f;
+
+    void Start()
+    {
+        player = GameObject.Find("Player #1");
+    }
     void Update()
     {
         var pos = transform.position;
-        pos.x += velocity * Time.deltaTime;
+        pos.x += velocity * player.GetComponent<PlayerPhysics>().direction * Time.deltaTime;
         transform.position = pos;
 
     }

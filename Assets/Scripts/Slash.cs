@@ -5,10 +5,16 @@ using UnityEngine;
 public class slash : MonoBehaviour
 {
     public float velocity = -0.5f;
+    GameObject player;
+
+    void Start()
+    {
+        player = GameObject.Find("Player #2");
+    }
     void Update()
     {
         var pos = transform.position;
-        pos.x += velocity * Time.deltaTime;
+        pos.x += velocity * player.GetComponent<Player2Physics>().direction * Time.deltaTime;
         transform.position = pos;
 
     }

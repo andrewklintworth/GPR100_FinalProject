@@ -15,6 +15,7 @@ public class Player2Physics : MonoBehaviour
     public GameObject basicHit;
     public GameObject basicHitAir;
     public Rigidbody PlayerRB;
+    public GameObject otherPlayer;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
     public int jumpHeight = 0;
@@ -26,6 +27,7 @@ public class Player2Physics : MonoBehaviour
     int hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
+    public int direction = 1;
 
 
     // Start is called before the first frame update
@@ -37,7 +39,9 @@ public class Player2Physics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.x < otherPlayer.transform.position.x)
+        { transform.rotation = new Quaternion(0, 180, 0, 0); direction = 1; }
+        else { transform.rotation = new Quaternion(0, 0, 0, 0); direction = -1; }
     }
 
     void FixedUpdate()
@@ -46,13 +50,19 @@ public class Player2Physics : MonoBehaviour
         if (hitCooldown > 0) { hitCooldown--; }
         if (hitStun > 0) { hitStun--; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
 
+        Movement();
+
+    }
+    
+    void Movement()
+    {
         RaycastHit hitinfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f))
         {
-
-            if (Input.GetKey(KeyCode.L)&&hitCooldown==0)
+           
+            if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
             {
-                Instantiate(basicHit, transform.position + new Vector3(-0.2f, -0.1f, 0), Quaternion.identity, gameObject.transform);
+                Instantiate(basicHit, transform.position + new Vector3(-0.2f*direction, -0.1f, 0), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
 
@@ -69,11 +79,12 @@ public class Player2Physics : MonoBehaviour
                 timerFixedUpdate = 2;
                 PlayerRB.AddForce(new Vector3(0, jumpHeight, 0));
             }
-        }   else if(hitStun==0)
+        }
+        else if (hitStun == 0)
         {
-            if (Input.GetKey(KeyCode.L)&&hitCooldown==0)
+            if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
             {
-                Instantiate(basicHitAir, transform.position + new Vector3(0, -1, 0), Quaternion.identity, gameObject.transform);
+                Instantiate(basicHitAir, transform.position + new Vector3(0, -1, 0), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
         }
