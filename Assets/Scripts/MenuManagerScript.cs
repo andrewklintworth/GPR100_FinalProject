@@ -16,11 +16,13 @@ public class MenuManagerScript : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Equals("Menu")) { DontDestroyOnLoad(gameObject); }
     }
 
-    void OnLevelWasLoaded(int level)
+    IEnumerator OnLevelWasLoaded(int level)
     {
         if (SceneManager.GetActiveScene().name.Equals("Menu"))
         {
             p1Selector = GameObject.Find("P #1 Display"); p2Selector = GameObject.Find("P #2 Display");
+
+            yield return new WaitForSeconds(0.1f);
             p1Selector.GetComponent<CharacterDisplay>().changeTo(p1CharacterNum);
             p2Selector.GetComponent<CharacterDisplay>().changeTo(p2CharacterNum);
         }
