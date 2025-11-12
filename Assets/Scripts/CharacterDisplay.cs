@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterDisplay : MonoBehaviour
 {
     public Sprite[] characterSprites;
-    public int characterIndex = 0;
+    public int characterIndex;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,12 @@ public class CharacterDisplay : MonoBehaviour
         characterIndex--;
         changeDisplay();
     }
+    public void changeTo(int x)
+    {
+        characterIndex = x;
+        changeDisplay();
+    }
+
     void changeDisplay()
     {
         if (characterIndex > characterSprites.Length - 1) { characterIndex = 0; }

@@ -43,7 +43,7 @@ public class PlayerPhysics : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<StartButton>().p1CharacterNum; }
+        if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<MenuManagerScript>().p1CharacterNum; }
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
         basicHit = playerInfo[characterNum].gameObjects[0];

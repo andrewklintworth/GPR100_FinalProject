@@ -9,7 +9,6 @@ public class HitBoxHit : MonoBehaviour
     void Start()
     {
         if (transform.parent.parent.name.Equals("Player #1")) { player1 = true; }
-        Debug.Log(transform.parent.parent.name);
     }
     public int pushForce;
     // Start is called before the first frame update
