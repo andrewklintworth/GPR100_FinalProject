@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,31 +9,45 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+[Serializable]
+public class GameObjectList
+{
+    public List<GameObject> gameObjects;
+}
+
 public class PlayerPhysics : MonoBehaviour
 {
     //public
     public GameObject hitVisual;
-    public GameObject basicHit;
-    public GameObject basicHitAir;
+    public GameObjectList[] playerInfo;
+    public Sprite[] textures;
     public Rigidbody PlayerRB;
     public GameObject otherPlayer;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
     public int jumpHeight = 0;
     public float maxSpeed = 0;
+    public int direction = 1;
 
     //private/not public
+    GameObject basicHit;
+    GameObject basicHitAir;
     int timerFixedUpdate = 2;
     int hitCooldown = 0;
     int hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
-    public int direction = 1;
+    int characterNum = 0;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<StartButton>().p1CharacterNum; }
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
+        basicHit = playerInfo[characterNum].gameObjects[0];
+        basicHitAir = playerInfo[characterNum].gameObjects[1];
     }
 
     // Update is called once per frame
@@ -40,7 +55,7 @@ public class PlayerPhysics : MonoBehaviour
     {
         if (transform.position.x > otherPlayer.transform.position.x)
         { transform.rotation = new Quaternion(0, 180, 0, 0); direction = -1; }
-        else { transform.rotation = new Quaternion(0, 0, 0, 0); direction = 1;}
+        else { transform.rotation = new Quaternion(0, 0, 0, 0); direction = 1; }
     }
 
     void FixedUpdate()
@@ -53,7 +68,7 @@ public class PlayerPhysics : MonoBehaviour
 
 
     }
-    
+
     void Movement()
     {
         RaycastHit hitinfo;
@@ -62,7 +77,8 @@ public class PlayerPhysics : MonoBehaviour
 
             if (Input.GetKey(KeyCode.C) && hitCooldown == 0)
             {
-                Instantiate(basicHit, transform.position + new Vector3(0.6f*direction, -0.5f, 0), transform.rotation, gameObject.transform);
+                Vector3 offset = basicHit.transform.position;
+                Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
 
@@ -84,7 +100,8 @@ public class PlayerPhysics : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.C) && hitCooldown == 0)
             {
-                Instantiate(basicHitAir, transform.position + new Vector3(0, -1, 0), transform.rotation, gameObject.transform);
+                Vector3 offset = basicHitAir.transform.position;
+                Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
         }

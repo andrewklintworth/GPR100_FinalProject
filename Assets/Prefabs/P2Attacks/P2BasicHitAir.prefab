@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6026148440065755976}
   - component: {fileID: 5072044353145478902}
   - component: {fileID: 4055576283942055918}
-  - component: {fileID: 5318479441821764542}
+  - component: {fileID: 7733239648523209106}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5318479441821764542
+--- !u!114 &7733239648523209106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2589791612590163020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b095c130091b12d0a8844c3b3df2b26b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ae5f18fc4b176fd5a5e217f7257460d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 400
@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 4309125585427621824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.91, y: -0.77, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -197,7 +197,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: -1, y: -1.5, z: 0}
+  - {x: 1, y: -1.5, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1

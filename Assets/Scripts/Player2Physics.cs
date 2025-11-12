@@ -8,40 +8,48 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+
 public class Player2Physics : MonoBehaviour
 {
     //public
     public GameObject hitVisual;
-    public GameObject basicHit;
-    public GameObject basicHitAir;
+    public GameObjectList[] playerInfo;
+    public Sprite[] textures;
     public Rigidbody PlayerRB;
     public GameObject otherPlayer;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
     public int jumpHeight = 0;
     public float maxSpeed = 0;
+    public int direction = 1;
 
     //private/not public
+    GameObject basicHit;
+    GameObject basicHitAir;
     int timerFixedUpdate = 2;
     int hitCooldown = 0;
     int hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
-    public int direction = 1;
+    int characterNum = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<StartButton>().p2CharacterNum; }
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
+        basicHit = playerInfo[characterNum].gameObjects[0];
+        basicHitAir = playerInfo[characterNum].gameObjects[1];
     }
 
     // Update is called once per frame
     void Update()
     {
         if (transform.position.x < otherPlayer.transform.position.x)
-        { transform.rotation = new Quaternion(0, 180, 0, 0); direction = 1; }
-        else { transform.rotation = new Quaternion(0, 0, 0, 0); direction = -1; }
+        { transform.rotation = new Quaternion(0, 0, 0, 0); direction = 1; }
+        else { transform.rotation = new Quaternion(0, 180, 0, 0); direction = -1; }
     }
 
     void FixedUpdate()
@@ -53,16 +61,17 @@ public class Player2Physics : MonoBehaviour
         Movement();
 
     }
-    
+
     void Movement()
     {
         RaycastHit hitinfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f))
         {
-           
+
             if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
             {
-                Instantiate(basicHit, transform.position + new Vector3(-0.2f*direction, -0.1f, 0), transform.rotation, gameObject.transform);
+                Vector3 offset = basicHit.transform.position;
+                Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
 
@@ -84,12 +93,13 @@ public class Player2Physics : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
             {
-                Instantiate(basicHitAir, transform.position + new Vector3(0, -1, 0), transform.rotation, gameObject.transform);
+                Vector3 offset = basicHitAir.transform.position;
+                Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 60;
             }
         }
     }
-    
+
     public void Hit(int damage, int force, Vector3 location)
     {
         hitVisual.GetComponent<MeshRenderer>().enabled = true;
@@ -98,7 +108,7 @@ public class Player2Physics : MonoBehaviour
 
         healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
         PlayerRB.AddForce((transform.position - location).normalized * force, ForceMode.Impulse);
-        if (Health<=0) { SceneManager.LoadScene("Menu"); }
+        if (Health <= 0) { SceneManager.LoadScene("Menu"); }
         Debug.Log("Hit");
     }
 
