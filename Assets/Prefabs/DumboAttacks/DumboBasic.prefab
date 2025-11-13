@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae5f18fc4b176fd5a5e217f7257460d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 500
+  pushForce: 300
 --- !u!1 &5704985480181654526
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,4 +540,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae5f18fc4b176fd5a5e217f7257460d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 500
+  pushForce: 100

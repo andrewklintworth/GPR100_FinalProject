@@ -106,14 +106,15 @@ public class PlayerPhysics : MonoBehaviour
         }
     }
 
-    public void Hit(int damage, int force, Vector3 Direction)
+    public void Hit(int damage, int force, Vector3 location)
     {
         hitVisual.GetComponent<MeshRenderer>().enabled = true;
         hitStun = 30;
         Health -= damage;
 
         healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
-        PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
+        //PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
+        PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.Impulse);
         if (Health <= 0) { SceneManager.LoadScene("Menu"); }
     }
 

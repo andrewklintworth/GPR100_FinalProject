@@ -56,6 +56,7 @@ public class HitBoxMove : MonoBehaviour
     public Vector3 retreiveDirection()
     {
         Vector3 hitPos = hitBox.transform.localPosition;
+        if(indexInPath>lineLength-2) { return hitPos += (hitBoxPath[indexInPath-1] - hitPos).normalized; }
         return hitPos += (hitBoxPath[indexInPath] - hitPos).normalized;
     }
 }

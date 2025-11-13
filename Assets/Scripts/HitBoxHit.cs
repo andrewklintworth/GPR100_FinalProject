@@ -9,7 +9,7 @@ public class HitBoxHit : MonoBehaviour
     bool player1 = false;
     void Start()
     {
-        if (transform.parent.parent.GetComponent<LineRenderer>() && transform.parent.parent.parent.parent.name.Equals("Player #1")) { player1 = true; }
+        if (transform.parent.parent.GetComponent<LineRenderer>() && transform.parent.parent.parent.name.Equals("Player #1")) { player1 = true; }
         if (transform.parent.parent.name.Equals("Player #1")) { player1 = true; }
         Invoke("canHit", 0.01f);
     }
@@ -20,13 +20,13 @@ public class HitBoxHit : MonoBehaviour
         if (active && player1 && other.name.Equals("Player #2"))
         {
             Vector3 retrivedDirection = transform.parent.GetComponent<HitBoxMove>().retreiveDirection();
-            other.GetComponent<Player2Physics>().Hit(20, pushForce, retrivedDirection);
+            other.GetComponent<Player2Physics>().Hit(20, pushForce, transform.position);
             hit();
         }
         else if (!player1 && other.name.Equals("Player #1"))
         {
             Vector3 retrivedDirection = transform.parent.GetComponent<HitBoxMove>().retreiveDirection();
-            other.GetComponent<PlayerPhysics>().Hit(20, pushForce, retrivedDirection);
+            other.GetComponent<PlayerPhysics>().Hit(20, pushForce, transform.position);
             hit();
         }
     }
