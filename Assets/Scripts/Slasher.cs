@@ -6,6 +6,7 @@ public class Slasher : MonoBehaviour
 {
     public GameObject slash;
     public GameObject BoosterPosition;
+    public GameObject special;
 
     int delay = 0;
 
@@ -24,6 +25,7 @@ public class Slasher : MonoBehaviour
     void FixedUpdate()
     {
         if (delay > 0) { delay--; }
+        special.transform.localScale = new Vector3(0.66f-0.66f*(delay/400f),0.66f,0.66f);
     }
 }
 

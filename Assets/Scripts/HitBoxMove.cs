@@ -29,22 +29,25 @@ public class HitBoxMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 hitPos = hitBox.transform.localPosition;
-        float distanceTo = Vector3.Distance(hitPos, hitBoxPath[indexInPath]);
+        if(transform.childCount==1)
+        {
+            Vector3 hitPos = hitBox.transform.localPosition;
+            float distanceTo = Vector3.Distance(hitPos, hitBoxPath[indexInPath]);
 
-        if (distanceTo <= Speed)
-        {
-            hitPos = hitBoxPath[indexInPath];
-            indexInPath++;
-            if (indexInPath > lineLength - 2) { destroySelf(); }
-            else { hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed - distanceTo); }
-            
+            if (distanceTo <= Speed)
+            {
+                hitPos = hitBoxPath[indexInPath];
+                indexInPath++;
+                if (indexInPath > lineLength - 2) { destroySelf(); }
+                else { hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed - distanceTo); }
+                
+            }
+            else
+            {
+                hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * Speed;
+            }
+            hitBox.transform.localPosition = hitPos;
         }
-        else
-        {
-            hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * Speed;
-        }
-        hitBox.transform.localPosition = hitPos;
 
     }
 
