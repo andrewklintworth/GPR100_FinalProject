@@ -9,16 +9,16 @@ public class Slasher : MonoBehaviour
     public GameObject special;
     public GameObject sfx;
 
-    int delay = 0;
+    float delay = 0;
 
 
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.K) && delay == 0)
+        if (Input.GetKeyDown(KeyCode.K) && delay <= 0)
         {
             Instantiate(slash, BoosterPosition.transform.position, transform.rotation);
-            delay = 400;
+            delay = 5;
             sfx.GetComponent<AudioManager>().PlaySFXReference(3);
         }
 
@@ -26,8 +26,8 @@ public class Slasher : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (delay > 0) { delay--; }
-        special.transform.localScale = new Vector3(0.66f-0.66f*(delay/400f),0.66f,0.66f);
+        if (delay > 0) { delay-=Time.fixedDeltaTime; }
+        special.transform.localScale = new Vector3(0.66f-0.66f*(delay/5),0.66f,0.66f);
     }
 }
 

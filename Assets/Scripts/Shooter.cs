@@ -9,22 +9,22 @@ public class Shooter: MonoBehaviour
     public GameObject sfx;
 
     public GameObject special;
-    int delay = 0;
+    float delay = 0;
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && delay == 0)
+        if (Input.GetKeyDown(KeyCode.V) && delay <= 0)
         {
             Instantiate(Projectile, BoosterPosition.transform.position, transform.rotation);
-            delay = 400;
+            delay = 5;
             sfx.GetComponent<AudioManager>().PlaySFXReference(3);
         }
     }
     
     void FixedUpdate()
     {
-        if (delay > 0) { delay--; }
-        special.transform.localScale = new Vector3(0.66f-0.66f*(delay/400f),0.66f,0.66f);
+        if (delay >= 0) { delay-= Time.fixedDeltaTime; }
+        special.transform.localScale = new Vector3(0.66f-0.66f*(delay/5),0.66f,0.66f);
     }
 }

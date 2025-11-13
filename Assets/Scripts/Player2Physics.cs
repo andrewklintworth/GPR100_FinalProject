@@ -26,9 +26,9 @@ public class Player2Physics : MonoBehaviour
     //private/not public
     GameObject basicHit;
     GameObject basicHitAir;
-    int timerFixedUpdate = 2;
-    int hitCooldown = 0;
-    int hitStun = 0;
+    float timerFixedUpdate = 2;
+    float hitCooldown = 0;
+    float hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
     int characterNum = 0;
@@ -54,9 +54,9 @@ public class Player2Physics : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (timerFixedUpdate > 0) { timerFixedUpdate--; }
-        if (hitCooldown > 0) { hitCooldown--; }
-        if (hitStun > 0) { hitStun--; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
+        if (timerFixedUpdate > 0) { timerFixedUpdate-=Time.fixedDeltaTime; }
+        if (hitCooldown > 0) { hitCooldown -= Time.fixedDeltaTime; }
+        if (hitStun > 0) { hitStun -= Time.fixedDeltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
 
         Movement();
 
@@ -65,14 +65,14 @@ public class Player2Physics : MonoBehaviour
     void Movement()
     {
         RaycastHit hitinfo;
-        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun == 0)
+        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun <= 0)
         {
 
-            if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
+            if (Input.GetKey(KeyCode.L) && hitCooldown <= 0)
             {
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
-                hitCooldown = 60;
+                hitCooldown = 1.5f;
             }
 
             // Right/Left movement
@@ -83,19 +83,19 @@ public class Player2Physics : MonoBehaviour
             PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -20, 10000), 0);
 
             // Jumping
-            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.UpArrow) && timerFixedUpdate == 0)
+            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.UpArrow) && timerFixedUpdate <= 0)
             {
-                timerFixedUpdate = 2;
+                timerFixedUpdate = 0.2f;
                 PlayerRB.AddForce(new Vector3(0, jumpHeight, 0));
             }
         }
-        else if (hitStun == 0)
+        else if (hitStun <= 0)
         {
-            if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
+            if (Input.GetKey(KeyCode.L) && hitCooldown <= 0)
             {
                 Vector3 offset = basicHitAir.transform.position;
                 Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
-                hitCooldown = 60;
+                hitCooldown = 1.5f;
             }
         }
     }
@@ -103,7 +103,7 @@ public class Player2Physics : MonoBehaviour
     public void Hit(int damage, int force, /*Vector3 Direction*/Vector3 location)
     {
         hitVisual.GetComponent<MeshRenderer>().enabled = true;
-        hitStun = 30;
+        hitStun = 0.6f;
         Health -= damage;
 
         healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
