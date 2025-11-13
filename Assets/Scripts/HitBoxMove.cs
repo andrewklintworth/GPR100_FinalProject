@@ -19,7 +19,8 @@ public class HitBoxMove : MonoBehaviour
         hitBox = transform.GetChild(0).gameObject;
 
         lineLength = gameObject.GetComponent<LineRenderer>().positionCount;
-        hitBoxPath = new Vector3[lineLength-1];
+        hitBoxPath = new Vector3[lineLength - 1];
+        
         for (int i = 1; i < lineLength; i++)
         {
             hitBoxPath[i - 1] = gameObject.GetComponent<LineRenderer>().GetPosition(i);
@@ -29,15 +30,32 @@ public class HitBoxMove : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 hitPos = hitBox.transform.localPosition;
-        hitPos += (hitBoxPath[indexInPath]-hitPos).normalized * Speed;
+        float distanceTo = Vector3.Distance(hitPos, hitBoxPath[indexInPath]);
+
+        if (distanceTo <= Speed)
+        {
+            hitPos = hitBoxPath[indexInPath];
+            indexInPath++;
+            if (indexInPath > lineLength - 2) { destroySelf(); }
+            else { hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed - distanceTo); }
+            
+        }
+        else
+        {
+            hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * Speed;
+        }
         hitBox.transform.localPosition = hitPos;
 
-        if (Vector3.Distance(hitPos,hitBoxPath[indexInPath])<Speed*2) { indexInPath++; }
-        if (indexInPath > lineLength-2) { destroySelf(); }
     }
 
     public void destroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public Vector3 retreiveDirection()
+    {
+        Vector3 hitPos = hitBox.transform.localPosition;
+        return hitPos += (hitBoxPath[indexInPath] - hitPos).normalized;
     }
 }

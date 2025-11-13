@@ -177,6 +177,7 @@ MonoBehaviour:
   characterSprites:
   - {fileID: 21300000, guid: bc9e758755937208aba8a6a87b21f33e, type: 3}
   - {fileID: 21300000, guid: 2bf89777242678f439b6f4c0e7aca777, type: 3}
+  - {fileID: 21300000, guid: 11ce6853c7a718a32b116228946df11a, type: 3}
   characterIndex: 0
 --- !u!114 &211114321
 MonoBehaviour:
@@ -2930,6 +2931,7 @@ MonoBehaviour:
   characterSprites:
   - {fileID: 21300000, guid: bc9e758755937208aba8a6a87b21f33e, type: 3}
   - {fileID: 21300000, guid: 2bf89777242678f439b6f4c0e7aca777, type: 3}
+  - {fileID: 21300000, guid: 11ce6853c7a718a32b116228946df11a, type: 3}
   characterIndex: 0
 --- !u!114 &1514634993
 MonoBehaviour:

@@ -65,7 +65,7 @@ public class Player2Physics : MonoBehaviour
     void Movement()
     {
         RaycastHit hitinfo;
-        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun == 0)
         {
 
             if (Input.GetKey(KeyCode.L) && hitCooldown == 0)
@@ -100,16 +100,15 @@ public class Player2Physics : MonoBehaviour
         }
     }
 
-    public void Hit(int damage, int force, Vector3 location)
+    public void Hit(int damage, int force, Vector3 Direction)
     {
         hitVisual.GetComponent<MeshRenderer>().enabled = true;
         hitStun = 30;
         Health -= damage;
 
         healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
-        PlayerRB.AddForce((transform.position - location).normalized * force, ForceMode.Impulse);
+        PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
         if (Health <= 0) { SceneManager.LoadScene("Menu"); }
-        Debug.Log("Hit");
     }
 
 }
