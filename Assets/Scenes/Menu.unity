@@ -3365,9 +3365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5b4ee5e5c54cb45bdd7b48cf621240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
+  musicSource: {fileID: 1143536542}
   SFXSource: {fileID: 0}
-  backround: {fileID: 0}
+  background: {fileID: 8300000, guid: 57dcf652399a12e4eaf1efbe923972b4, type: 3}
   death: {fileID: 0}
   shoot: {fileID: 0}
   damageTaken: {fileID: 0}

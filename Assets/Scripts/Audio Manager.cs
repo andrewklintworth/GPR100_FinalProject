@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("- - - - Audio Source - - - - ")]
-    [SerializeField] AudioSource musicSource;
+    [Header("- - - - Audio Source - - - - ")] [SerializeField]
+    AudioSource musicSource;
+
     [SerializeField] AudioSource SFXSource;
 
     [Header("- - - - Audio Clip - - - - ")]
-    public AudioClip backround;
+    public AudioClip background;
     public AudioClip death;
     public AudioClip shoot;
     public AudioClip damageTaken;
@@ -20,7 +22,16 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        musicSource.clip = backround;
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            musicSource.clip = background;
+        }
+        else if (SceneManager.GetActiveScene().name == "Level-1")
+        {
+            musicSource.clip = fightMusic;
+
+        }
+
         musicSource.Play();
     }
 
@@ -29,4 +40,10 @@ public class AudioManager : MonoBehaviour
         SFXSource.PlayOneShot(clip);
     }
 
+    public void PlaySFXReference(int list)
+    {
+        if (list == 1) { PlaySFX(background);}
+    }
+
 }
+

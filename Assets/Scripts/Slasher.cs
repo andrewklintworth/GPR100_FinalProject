@@ -7,6 +7,7 @@ public class Slasher : MonoBehaviour
     public GameObject slash;
     public GameObject BoosterPosition;
     public GameObject special;
+    public GameObject sfx;
 
     int delay = 0;
 
@@ -18,6 +19,7 @@ public class Slasher : MonoBehaviour
         {
             Instantiate(slash, BoosterPosition.transform.position, transform.rotation);
             delay = 400;
+            sfx.GetComponent<AudioManager>().PlaySFXReference(3);
         }
 
     }

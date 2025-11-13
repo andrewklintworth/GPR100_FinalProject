@@ -6,6 +6,7 @@ public class Shooter: MonoBehaviour
 {
     public GameObject Projectile;
     public GameObject BoosterPosition;
+    public GameObject sfx;
 
     public GameObject special;
     int delay = 0;
@@ -17,6 +18,7 @@ public class Shooter: MonoBehaviour
         {
             Instantiate(Projectile, BoosterPosition.transform.position, transform.rotation);
             delay = 400;
+            sfx.GetComponent<AudioManager>().PlaySFXReference(3);
         }
     }
     
