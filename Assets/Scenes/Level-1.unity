@@ -1413,10 +1413,10 @@ MonoBehaviour:
   SFXSource: {fileID: 0}
   background: {fileID: 8300000, guid: df02212547dc2b24894310b57686d698, type: 3}
   death: {fileID: 0}
-  shoot: {fileID: 0}
+  shoot: {fileID: 8300000, guid: 0cd19c9063f143141940c9d81a59b024, type: 3}
   damageTaken: {fileID: 0}
   fightMusic: {fileID: 8300000, guid: df02212547dc2b24894310b57686d698, type: 3}
-  attack: {fileID: 0}
+  attack: {fileID: 8300000, guid: 7c0d867cc2b827d40bd6cb724a7008f4, type: 3}
 --- !u!4 &1583157099
 Transform:
   m_ObjectHideFlags: 0
