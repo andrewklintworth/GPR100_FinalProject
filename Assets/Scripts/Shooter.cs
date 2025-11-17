@@ -21,7 +21,10 @@ public class Shooter: MonoBehaviour
             sfx.GetComponent<AudioManager>().PlaySFXReference(3);
         }
     }
-    
+
+
+
+
     void FixedUpdate()
     {
         if (delay >= 0) { delay-= Time.fixedDeltaTime; }
