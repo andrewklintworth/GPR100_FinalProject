@@ -70,7 +70,7 @@ public class Player2Physics : MonoBehaviour
             {
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
-                hitCooldown = 1.5f;
+                hitCooldown = 1.3f;
             }
 
             // Right/Left movement
@@ -94,7 +94,7 @@ public class Player2Physics : MonoBehaviour
             {
                 Vector3 offset = basicHitAir.transform.position;
                 Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
-                hitCooldown = 1.5f;
+                hitCooldown = 1.3f;
             }
         }
     }
