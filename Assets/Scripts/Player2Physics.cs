@@ -26,7 +26,7 @@ public class Player2Physics : MonoBehaviour
     //private/not public
     GameObject basicHit;
     GameObject basicHitAir;
-    float timerFixedUpdate = 2;
+    float timerFixedUpdate = 0.2f;
     float hitCooldown = 0;
     float hitStun = 0;
     float maxHealth = 160;
@@ -50,17 +50,15 @@ public class Player2Physics : MonoBehaviour
         if (transform.position.x < otherPlayer.transform.position.x)
         { transform.rotation = new Quaternion(0, 0, 0, 0); direction = 1; }
         else { transform.rotation = new Quaternion(0, 180, 0, 0); direction = -1; }
-    }
 
-    void FixedUpdate()
-    {
-        if (timerFixedUpdate > 0) { timerFixedUpdate-=Time.fixedDeltaTime; }
-        if (hitCooldown > 0) { hitCooldown -= Time.fixedDeltaTime; }
-        if (hitStun > 0) { hitStun -= Time.fixedDeltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
-
+        if (timerFixedUpdate > 0) { timerFixedUpdate-=Time.deltaTime; }
+        if (hitCooldown > 0) { hitCooldown -= Time.deltaTime; }
+        if (hitStun > 0) { hitStun -= Time.deltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
+        
         Movement();
 
     }
+
 
     void Movement()
     {
@@ -76,18 +74,19 @@ public class Player2Physics : MonoBehaviour
             }
 
             // Right/Left movement
-            if (Input.GetKey(KeyCode.LeftArrow)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed, 0, 0)); }
-            if (Input.GetKey(KeyCode.RightArrow)) { PlayerRB.AddForce(new Vector3(horizontalSpeed, 0, 0)); }
-
-            // Clamp velocity Right/Left/Up/Down
-            PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -20, 10000), 0);
+            if (Input.GetKey(KeyCode.LeftArrow)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0)); }
+            if (Input.GetKey(KeyCode.RightArrow)) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0)); }
 
             // Jumping
             if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.UpArrow) && timerFixedUpdate <= 0)
             {
                 timerFixedUpdate = 0.2f;
-                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0));
+                PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
+                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.Impulse);
             }
+
+            // Clamp velocity Right/Left/Up/Down
+            PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -30, 10000), 0);
         }
         else if (hitStun <= 0)
         {

@@ -32,7 +32,7 @@ public class PlayerPhysics : MonoBehaviour
     //private/not public
     GameObject basicHit;
     GameObject basicHitAir;
-    float timerFixedUpdate = 2;
+    float timerUpdate = 0.2f;
     float hitCooldown = 0;
     float hitStun = 0;
     float maxHealth = 160;
@@ -56,17 +56,14 @@ public class PlayerPhysics : MonoBehaviour
         if (transform.position.x > otherPlayer.transform.position.x)
         { transform.rotation = new Quaternion(0, 180, 0, 0); direction = -1; }
         else { transform.rotation = new Quaternion(0, 0, 0, 0); direction = 1; }
-    }
 
-    void FixedUpdate()
-    {
-        if (timerFixedUpdate > 0) { timerFixedUpdate -= Time.fixedDeltaTime; }
-        if (hitCooldown > 0) { hitCooldown -= Time.fixedDeltaTime; }
-        if (hitStun > 0) { hitStun -= Time.fixedDeltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
+        if (timerUpdate > 0) { timerUpdate -= Time.deltaTime; }
+        if (hitCooldown > 0) { hitCooldown -= Time.deltaTime; }
+        if (hitStun > 0) { hitStun -= Time.deltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
 
         Movement();
-
     }
+
 
     void Movement()
     {
@@ -82,18 +79,20 @@ public class PlayerPhysics : MonoBehaviour
             }
 
             // Right/Left movement
-            if (Input.GetKey(KeyCode.A)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed, 0, 0)); }
-            if (Input.GetKey(KeyCode.D)) { PlayerRB.AddForce(new Vector3(horizontalSpeed, 0, 0)); }
+            if (Input.GetKey(KeyCode.A)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0)); }
+            if (Input.GetKey(KeyCode.D)) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0)); }
 
-            // Clamp velocity Right/Left/Up/Down
-            PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -20, 10000), 0);
 
             // Jumping
-            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.W) && timerFixedUpdate <= 0)
+            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.W) && timerUpdate <= 0)
             {
-                timerFixedUpdate = 0.2f;
-                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0));
+                timerUpdate = 0.2f;
+                PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
+                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.Impulse);
             }
+
+        // Clamp velocity Right/Left/Up/Down
+        PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -30, 100000000000), 0);
         }
         else if (hitStun <= 0)
         {
@@ -104,6 +103,7 @@ public class PlayerPhysics : MonoBehaviour
                 hitCooldown = 1.5f;
             }
         }
+
     }
 
     public void Hit(int damage, int force, Vector3 location)
