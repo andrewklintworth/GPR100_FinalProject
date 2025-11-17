@@ -66,7 +66,7 @@ public class Player2Physics : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun <= 0)
         {
 
-            if (Input.GetKey(KeyCode.L) && hitCooldown <= 0)
+            if ((Input.GetKey(KeyCode.L)||Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
@@ -74,11 +74,11 @@ public class Player2Physics : MonoBehaviour
             }
 
             // Right/Left movement
-            if (Input.GetKey(KeyCode.LeftArrow)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0)); }
-            if (Input.GetKey(KeyCode.RightArrow)) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0)); }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0)); }
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0)); }
 
             // Jumping
-            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.UpArrow) && timerFixedUpdate <= 0)
+            if (hitinfo.collider.gameObject.layer == 6 && (Input.GetKey(KeyCode.UpArrow)||Input.GetButtonDown("Jump")) && timerFixedUpdate <= 0)
             {
                 timerFixedUpdate = 0.2f;
                 PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
@@ -90,7 +90,7 @@ public class Player2Physics : MonoBehaviour
         }
         else if (hitStun <= 0)
         {
-            if (Input.GetKey(KeyCode.L) && hitCooldown <= 0)
+            if ((Input.GetKey(KeyCode.L) || Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
                 Vector3 offset = basicHitAir.transform.position;
                 Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);

@@ -15,7 +15,7 @@ public class Slasher : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.K) && delay <= 0)
+        if ((Input.GetKeyDown(KeyCode.K)||Input.GetButtonDown("Fire2")) && delay <= 0)
         {
             Instantiate(slash, BoosterPosition.transform.position, transform.rotation);
             delay = 5;
