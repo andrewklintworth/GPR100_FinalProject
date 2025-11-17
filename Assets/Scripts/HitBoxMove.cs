@@ -27,28 +27,27 @@ public class HitBoxMove : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        if(transform.childCount==1)
+        if (transform.childCount == 1)
         {
             Vector3 hitPos = hitBox.transform.localPosition;
             float distanceTo = Vector3.Distance(hitPos, hitBoxPath[indexInPath]);
 
-            if (distanceTo <= Speed)
+            if (distanceTo <= Speed*Time.deltaTime)
             {
                 hitPos = hitBoxPath[indexInPath];
                 indexInPath++;
                 if (indexInPath > lineLength - 2) { destroySelf(); }
-                else { hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed - distanceTo); }
-                
+                else { hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed*Time.deltaTime - distanceTo); }
+
             }
             else
             {
-                hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * Speed;
+                hitPos += (hitBoxPath[indexInPath] - hitPos).normalized * (Speed * Time.deltaTime);
             }
             hitBox.transform.localPosition = hitPos;
         }
-
     }
 
     public void destroySelf()
