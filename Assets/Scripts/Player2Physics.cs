@@ -19,6 +19,7 @@ public class Player2Physics : MonoBehaviour
     public GameObject otherPlayer;
     public float horizontalSpeed = 0;
     public GameObject healthBar;
+    public GameObject sheild;
     public int jumpHeight = 0;
     public float maxSpeed = 0;
     public int direction = 1;
@@ -27,11 +28,13 @@ public class Player2Physics : MonoBehaviour
     GameObject basicHit;
     GameObject basicHitAir;
     float timerFixedUpdate = 0.2f;
+    float deflect = 0.2f;
     float hitCooldown = 0;
     float hitStun = 0;
     float maxHealth = 160;
     int Health = 160;
     int characterNum = 0;
+    public int attackId = 0;
 
 
     // Start is called before the first frame update
@@ -53,6 +56,7 @@ public class Player2Physics : MonoBehaviour
 
         if (timerFixedUpdate > 0) { timerFixedUpdate-=Time.deltaTime; }
         if (hitCooldown > 0) { hitCooldown -= Time.deltaTime; }
+        if (deflect > 0) { deflect -= Time.deltaTime; }
         if (hitStun > 0) { hitStun -= Time.deltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
         
         Movement();
@@ -68,9 +72,16 @@ public class Player2Physics : MonoBehaviour
 
             if ((Input.GetKey(KeyCode.L)||Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
+                attackId = 0;
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 1.3f;
+            }
+
+             if ((Input.GetKey(KeyCode.J)||Input.GetButtonDown("Fire1")) && deflect <= 0)
+            {
+                Instantiate(sheild, transform.position, transform.rotation, gameObject.transform);
+                deflect = 1.2f;
             }
 
             // Right/Left movement
@@ -92,6 +103,7 @@ public class Player2Physics : MonoBehaviour
         {
             if ((Input.GetKey(KeyCode.L) || Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
+                attackId = 0;
                 Vector3 offset = basicHitAir.transform.position;
                 Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 1.3f;
@@ -101,14 +113,17 @@ public class Player2Physics : MonoBehaviour
 
     public void Hit(int damage, int force, /*Vector3 Direction*/Vector3 location)
     {
-        hitVisual.GetComponent<MeshRenderer>().enabled = true;
-        hitStun = 0.6f;
-        Health -= damage;
+        if(deflect > 1.2f || deflect < 1f)
+        {
+            hitVisual.GetComponent<MeshRenderer>().enabled = true;
+            hitStun = 0.6f;
+            Health -= damage;
 
-        healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
-        //PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
-        PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.Impulse);
-        if (Health <= 0) { SceneManager.LoadScene("Menu"); }
+            healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
+            //PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
+            PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.Impulse);
+            if (Health <= 0) { SceneManager.LoadScene("Menu"); }
+        }
     }
 
 }

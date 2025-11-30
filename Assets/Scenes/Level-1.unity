@@ -1979,9 +1979,11 @@ MonoBehaviour:
   otherPlayer: {fileID: 2134881937}
   horizontalSpeed: 200000
   healthBar: {fileID: 1786589965}
+  sheild: {fileID: 4331126989630057378, guid: 34c4c57f05d5d4be485ebdaa2d95d7db, type: 3}
   jumpHeight: 300
   maxSpeed: 5
   direction: 1
+  attackId: 0
 --- !u!54 &1783356629
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2461,9 +2463,11 @@ MonoBehaviour:
   otherPlayer: {fileID: 1783356627}
   horizontalSpeed: 200000
   healthBar: {fileID: 1961140424}
+  sheild: {fileID: 4331126989630057378, guid: 34c4c57f05d5d4be485ebdaa2d95d7db, type: 3}
   jumpHeight: 300
   maxSpeed: 5
   direction: 1
+  attackId: 0
 --- !u!65 &2134881941
 BoxCollider:
   m_ObjectHideFlags: 0
