@@ -1977,10 +1977,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 11ce6853c7a718a32b116228946df11a, type: 3}
   PlayerRB: {fileID: 1783356629}
   otherPlayer: {fileID: 2134881937}
-  horizontalSpeed: 200000
+  horizontalSpeed: 50
   healthBar: {fileID: 1786589965}
   sheild: {fileID: 4331126989630057378, guid: 34c4c57f05d5d4be485ebdaa2d95d7db, type: 3}
-  jumpHeight: 300
+  jumpHeight: 6
   maxSpeed: 5
   direction: 1
   attackId: 0
@@ -2461,10 +2461,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 11ce6853c7a718a32b116228946df11a, type: 3}
   PlayerRB: {fileID: 2134881943}
   otherPlayer: {fileID: 1783356627}
-  horizontalSpeed: 200000
+  horizontalSpeed: 50
   healthBar: {fileID: 1961140424}
   sheild: {fileID: 4331126989630057378, guid: 34c4c57f05d5d4be485ebdaa2d95d7db, type: 3}
-  jumpHeight: 300
+  jumpHeight: 6
   maxSpeed: 5
   direction: 1
   attackId: 0

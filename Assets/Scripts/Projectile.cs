@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.name.Equals("Player #2")) 
             {
-            other.GetComponent<Player2Physics>().Hit(35,100,transform.position);
+            other.GetComponent<Player2Physics>().Hit(25,10,transform.position);
             Destroy(gameObject); 
             }
     }

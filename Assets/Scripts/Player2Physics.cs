@@ -85,25 +85,29 @@ public class Player2Physics : MonoBehaviour
             }
 
             // Right/Left movement
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0)); }
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0)); }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
 
             // Jumping
             if (hitinfo.collider.gameObject.layer == 6 && (Input.GetKey(KeyCode.UpArrow)||Input.GetButtonDown("Jump")) && timerFixedUpdate <= 0)
             {
                 timerFixedUpdate = 0.2f;
                 PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
-                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.Impulse);
+                PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.VelocityChange);
             }
 
             // Clamp velocity Right/Left/Up/Down
-            PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -30, 10000), 0);
+            PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -100, 100), 0);
         }
         else if (hitStun <= 0)
         {
             if ((Input.GetKey(KeyCode.L) || Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
-                attackId = 0;
+                attackId = 1;
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*3, 0, 0),ForceMode.Impulse); }
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) { PlayerRB.AddForce(new Vector3(horizontalSpeed*3, 0, 0),ForceMode.Impulse); }
+
+
                 Vector3 offset = basicHitAir.transform.position;
                 Instantiate(basicHitAir, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 1.3f;
@@ -121,7 +125,7 @@ public class Player2Physics : MonoBehaviour
 
             healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
             //PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
-            PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.Impulse);
+            PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.VelocityChange);
             if (Health <= 0) { SceneManager.LoadScene("Menu"); }
         }
     }

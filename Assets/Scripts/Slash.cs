@@ -22,7 +22,7 @@ public class slash : MonoBehaviour
     {
         if (other.name.Equals("Player #1"))
             {
-            other.GetComponent<PlayerPhysics>().Hit(35, 100, transform.position);
+            other.GetComponent<PlayerPhysics>().Hit(25, 10, transform.position);
             Destroy(gameObject);
             }
     }
