@@ -12,11 +12,27 @@ public class AudioManager : MonoBehaviour
 
     [Header("- - - - Audio Clip - - - - ")]
     public AudioClip background;
+    public AudioClip melee;
+    public AudioClip laser;
+    public AudioClip slash;
     public AudioClip death;
-    public AudioClip shoot;
-    public AudioClip damageTaken;
+    public AudioClip damage;
     public AudioClip fightMusic;
-    public AudioClip attack;
+    public AudioClip fightMusic2;
+    //If needed  public AudioClip fightMusic3; 
+
+    public enum soundEffects
+    {
+        background,
+        melee,
+        laser,
+        slash,
+        death,
+        damage,
+        fightMusic,
+        fightMusic2,
+    }
+
 
 
 
@@ -40,9 +56,27 @@ public class AudioManager : MonoBehaviour
         SFXSource.PlayOneShot(clip);
     }
 
-    public void PlaySFXReference(int list)
+    public void PlaySFXReference(soundEffects se)
     {
-        if (list == 1) { PlaySFX(background);}
+        switch (se)
+        {
+            case soundEffects.background:
+                PlaySFX(background);
+                break;
+            case soundEffects.melee:
+                PlaySFX(melee);
+                break;
+            case soundEffects.laser:
+                PlaySFX(laser);
+                break;
+            case soundEffects.damage:
+                PlaySFX(damage);
+                break;
+            case soundEffects.fightMusic:
+                PlaySFX(fightMusic);
+                break;
+        }
+        
     }
 
 }

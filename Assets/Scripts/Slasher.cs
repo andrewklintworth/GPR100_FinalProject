@@ -19,7 +19,7 @@ public class Slasher : MonoBehaviour
         {
             Instantiate(slash, BoosterPosition.transform.position, transform.rotation);
             delay = 5;
-            sfx.GetComponent<AudioManager>().PlaySFXReference(3);
+            sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.slash);
         }
 
     }

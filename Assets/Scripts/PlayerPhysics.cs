@@ -30,6 +30,7 @@ public class PlayerPhysics : MonoBehaviour
     public float maxSpeed = 0;
     public int direction = 1;
     public int attackId = 0;
+    public GameObject sfx;
 
     //private/not public
     GameObject basicHit;
@@ -77,6 +78,7 @@ public class PlayerPhysics : MonoBehaviour
 
             if (Input.GetKey(KeyCode.C) && hitCooldown <= 0)
             {
+                sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.melee);
                 attackId = 0;
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
@@ -109,6 +111,7 @@ public class PlayerPhysics : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.C) && hitCooldown <= 0)
             {
+                sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.melee);
                 attackId = 1;
                 if (Input.GetKey(KeyCode.A)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*3, 0, 0),ForceMode.Impulse); }
                 if (Input.GetKey(KeyCode.D)) { PlayerRB.AddForce(new Vector3(horizontalSpeed*3, 0, 0),ForceMode.Impulse); }
@@ -129,7 +132,9 @@ public class PlayerPhysics : MonoBehaviour
             hitVisual.GetComponent<MeshRenderer>().enabled = true;
             hitStun = 0.6f;
             Health -= damage;
-
+            
+            sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.damage);
+            
             healthBar.transform.localScale = new Vector3(Health / maxHealth, 1, 1);
             //PlayerRB.AddForce(new Vector3(Direction.x * -direction *force,Direction.y * force,0), ForceMode.Impulse);
             PlayerRB.AddForce((transform.position-location).normalized*force, ForceMode.VelocityChange);

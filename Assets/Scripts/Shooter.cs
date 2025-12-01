@@ -18,7 +18,7 @@ public class Shooter: MonoBehaviour
         {
             Instantiate(Projectile, BoosterPosition.transform.position, transform.rotation);
             delay = 5;
-            sfx.GetComponent<AudioManager>().PlaySFXReference(3);
+            sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.laser);
         }
     }
 

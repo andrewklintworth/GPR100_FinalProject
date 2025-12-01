@@ -442,7 +442,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -1240,8 +1240,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 014f492aac56c134dbefd95b6f262b8b, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1540,11 +1540,13 @@ MonoBehaviour:
   musicSource: {fileID: 689572194}
   SFXSource: {fileID: 1488033583}
   background: {fileID: 8300000, guid: df02212547dc2b24894310b57686d698, type: 3}
+  melee: {fileID: 8300000, guid: 6db98503aa1b88f4d8402ab800c81d00, type: 3}
+  laser: {fileID: 8300000, guid: d714814ed5177a2419774bd44d4daabc, type: 3}
+  slash: {fileID: 0}
   death: {fileID: 0}
-  shoot: {fileID: 8300000, guid: 0cd19c9063f143141940c9d81a59b024, type: 3}
-  damageTaken: {fileID: 0}
+  damage: {fileID: 8300000, guid: 014f492aac56c134dbefd95b6f262b8b, type: 3}
   fightMusic: {fileID: 8300000, guid: df02212547dc2b24894310b57686d698, type: 3}
-  attack: {fileID: 8300000, guid: 7c0d867cc2b827d40bd6cb724a7008f4, type: 3}
+  fightMusic2: {fileID: 0}
 --- !u!4 &1583157099
 Transform:
   m_ObjectHideFlags: 0
@@ -1983,6 +1985,7 @@ MonoBehaviour:
   jumpHeight: 6
   maxSpeed: 5
   direction: 1
+  sfx: {fileID: 1583157097}
   attackId: 0
 --- !u!54 &1783356629
 Rigidbody:
@@ -2468,6 +2471,7 @@ MonoBehaviour:
   maxSpeed: 5
   direction: 1
   attackId: 0
+  sfx: {fileID: 1583157097}
 --- !u!65 &2134881941
 BoxCollider:
   m_ObjectHideFlags: 0
