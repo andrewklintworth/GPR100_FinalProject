@@ -67,6 +67,19 @@ public class PlayerPhysics : MonoBehaviour
         if (hitStun > 0) { hitStun -= Time.deltaTime; } else { hitVisual.GetComponent<MeshRenderer>().enabled = false; }
 
         Movement();
+
+        var deltaSizeX = gameObject.GetComponent<BoxCollider>().size.x / 2 +
+                    otherPlayer.GetComponent<BoxCollider>().size.x / 2;
+        var distance = (
+              (gameObject.transform.position + gameObject.GetComponent<BoxCollider>().center) - 
+              (otherPlayer.transform.position + otherPlayer.GetComponent<BoxCollider>().center)
+            ).magnitude+0.1f;
+        if (distance < deltaSizeX)
+        {
+            // apply force between them or reposition it
+            PlayerRB.AddForce(new Vector3(-(100*direction*Time.deltaTime),0,0),ForceMode.VelocityChange);
+        }
+        
     }
 
 
