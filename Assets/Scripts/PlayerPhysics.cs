@@ -33,6 +33,7 @@ public class PlayerPhysics : MonoBehaviour
     public GameObject sfx;
 
     //private/not public
+    private Animator chAnimator;
     GameObject basicHit;
     GameObject basicHitAir;
     float timerUpdate = 0.2f;
@@ -49,6 +50,7 @@ public class PlayerPhysics : MonoBehaviour
     {
         if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<MenuManagerScript>().p1CharacterNum; }
 
+        chAnimator = GetComponentInChildren<Animator>();
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
         basicHit = playerInfo[characterNum].gameObjects[0];
         basicHitAir = playerInfo[characterNum].gameObjects[1];
@@ -78,6 +80,7 @@ public class PlayerPhysics : MonoBehaviour
         {
             // apply force between them or reposition it
             PlayerRB.AddForce(new Vector3(-(100*direction*Time.deltaTime),0,0),ForceMode.VelocityChange);
+
         }
         
     }
@@ -89,36 +92,63 @@ public class PlayerPhysics : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun <= 0)
         {
 
-            if (Input.GetKey(KeyCode.C) && hitCooldown <= 0)
+            if (Input.GetKeyDown(KeyCode.C) && hitCooldown <= 0)
             {
+                chAnimator.SetTrigger("trAttacking");
                 sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.melee);
                 attackId = 0;
                 Vector3 offset = basicHit.transform.position;
                 Instantiate(basicHit, transform.position + new Vector3(offset.x*direction,offset.y,offset.z), transform.rotation, gameObject.transform);
                 hitCooldown = 1.3f;
             }
+            
 
-            if (Input.GetKey(KeyCode.X) && deflect <= 0)
+            if (Input.GetKeyDown(KeyCode.X) && deflect <= 0)
             {
+                chAnimator.SetTrigger("trSpecial");
                 Instantiate(sheild, transform.position, transform.rotation, gameObject.transform);
                 deflect = 1.2f;
             }
 
+            // Animate Special
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                chAnimator.SetTrigger("trSpecial");
+            }
+
             // Right/Left movement
-            if (Input.GetKey(KeyCode.A)) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
-            if (Input.GetKey(KeyCode.D)) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
+            if (Input.GetKey(KeyCode.A))
+            {
+                chAnimator.SetBool("bBacking", true);
+                PlayerRB.AddForce(new Vector3(-horizontalSpeed * Time.deltaTime, 0, 0), ForceMode.VelocityChange);
+            }
+            else { chAnimator.SetBool("bBacking", false); }
+
+            if (Input.GetKey(KeyCode.D)) 
+            {
+                chAnimator.SetBool("bWalking", true);
+                PlayerRB.AddForce(new Vector3(horizontalSpeed * Time.deltaTime, 0, 0), ForceMode.VelocityChange);
+            }
+            else { chAnimator.SetBool("bWalking", false); }
 
 
             // Jumping
-            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKey(KeyCode.W) && timerUpdate <= 0)
+            if (hitinfo.collider.gameObject.layer == 6 && Input.GetKeyDown(KeyCode.W) && timerUpdate <= 0)
             {
+                chAnimator.SetTrigger("trJumping");
                 timerUpdate = 0.2f;
                 PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
                 PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.VelocityChange);
             }
+            // Falling animation
+            if (PlayerRB.velocity.y < 0f)
+            {
+                chAnimator.SetTrigger("trFalling");
+            }
+            
 
-        // Clamp velocity Right/Left/Up/Down
-        PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -100, 100), 0);
+                // Clamp velocity Right/Left/Up/Down
+                PlayerRB.velocity = new Vector3(Mathf.Clamp(PlayerRB.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(PlayerRB.velocity.y, -100, 100), 0);
         }
         else if (hitStun <= 0)
         {
