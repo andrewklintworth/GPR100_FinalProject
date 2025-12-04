@@ -26,6 +26,7 @@ public class Player2Physics : MonoBehaviour
     public GameObject sfx;
 
     //private/not public
+    private Animator chAnimator;
     GameObject basicHit;
     GameObject basicHitAir;
     float timerFixedUpdate = 0.2f;
@@ -42,6 +43,12 @@ public class Player2Physics : MonoBehaviour
     void Start()
     {
         if (GameObject.Find("MenuManager")) { characterNum = GameObject.Find("MenuManager").GetComponent<MenuManagerScript>().p2CharacterNum; }
+
+        chAnimator = GetComponentInChildren<Animator>();
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
+
+        if(characterNum==1){transform.GetChild(0).GetComponent<SpriteRenderer>().enabled=false;}
+        else{transform.GetChild(1).GetComponent<SpriteRenderer>().enabled=false;}
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
         basicHit = playerInfo[characterNum].gameObjects[0];
@@ -84,6 +91,7 @@ public class Player2Physics : MonoBehaviour
 
             if ((Input.GetKey(KeyCode.L)||Input.GetButtonDown("Fire1")) && hitCooldown <= 0)
             {
+                chAnimator.SetTrigger("trAttacking");
                 sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.melee);
                 attackId = 0;
                 Vector3 offset = basicHit.transform.position;
@@ -93,20 +101,43 @@ public class Player2Physics : MonoBehaviour
 
              if ((Input.GetKey(KeyCode.J)||Input.GetButtonDown("Fire1")) && deflect <= 0)
             {
+                chAnimator.SetTrigger("trSpecial");
                 Instantiate(sheild, transform.position, transform.rotation, gameObject.transform);
                 deflect = 1.2f;
             }
 
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                chAnimator.SetTrigger("trSpecial");
+            }
+
             // Right/Left movement
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) { PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) { PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0) 
+            { 
+                PlayerRB.AddForce(new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); 
+                chAnimator.SetBool("bBacking", true);
+            }
+            else { chAnimator.SetBool("bBacking", false); }
+
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0) 
+            { 
+                PlayerRB.AddForce(new Vector3(horizontalSpeed*Time.deltaTime, 0, 0),ForceMode.VelocityChange); 
+                chAnimator.SetBool("bWalking", true);
+            }
+            else { chAnimator.SetBool("bWalking", false); }
 
             // Jumping
             if (hitinfo.collider.gameObject.layer == 6 && (Input.GetKey(KeyCode.UpArrow)||Input.GetButtonDown("Jump")) && timerFixedUpdate <= 0)
             {
+                chAnimator.SetTrigger("trJumping");
                 timerFixedUpdate = 0.2f;
                 PlayerRB.velocity = new Vector3(PlayerRB.velocity.x,0,PlayerRB.velocity.z);
                 PlayerRB.AddForce(new Vector3(0, jumpHeight, 0),ForceMode.VelocityChange);
+            }
+
+            if (PlayerRB.velocity.y < 0f)
+            {
+                chAnimator.SetTrigger("trFalling");
             }
 
             // Clamp velocity Right/Left/Up/Down

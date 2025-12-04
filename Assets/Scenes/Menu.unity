@@ -3368,11 +3368,13 @@ MonoBehaviour:
   musicSource: {fileID: 1143536542}
   SFXSource: {fileID: 0}
   background: {fileID: 8300000, guid: 57dcf652399a12e4eaf1efbe923972b4, type: 3}
+  melee: {fileID: 0}
+  laser: {fileID: 0}
+  slash: {fileID: 0}
   death: {fileID: 0}
-  shoot: {fileID: 0}
-  damageTaken: {fileID: 0}
+  damage: {fileID: 0}
   fightMusic: {fileID: 0}
-  attack: {fileID: 0}
+  fightMusic2: {fileID: 0}
 --- !u!4 &2061753080
 Transform:
   m_ObjectHideFlags: 0

@@ -52,6 +52,10 @@ public class PlayerPhysics : MonoBehaviour
 
         chAnimator = GetComponentInChildren<Animator>();
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = textures[characterNum];
+
+        if(characterNum==1){transform.GetChild(0).GetComponent<SpriteRenderer>().enabled=false;}
+        else{transform.GetChild(1).GetComponent<SpriteRenderer>().enabled=false;}
+
         basicHit = playerInfo[characterNum].gameObjects[0];
         basicHitAir = playerInfo[characterNum].gameObjects[1];
     }
@@ -92,7 +96,7 @@ public class PlayerPhysics : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hitinfo, 1.6f) && hitStun <= 0)
         {
 
-            if (Input.GetKeyDown(KeyCode.C) && hitCooldown <= 0)
+            if (Input.GetKey(KeyCode.C) && hitCooldown <= 0)
             {
                 chAnimator.SetTrigger("trAttacking");
                 sfx.GetComponent<AudioManager>().PlaySFXReference(AudioManager.soundEffects.melee);
